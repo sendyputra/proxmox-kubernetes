@@ -29,6 +29,12 @@ locals {
   cluster_fqdn = "${local.cluster_name}.${var.cluster_domain}"
 }
 
+variable "ndots" {
+  type        = number
+  description = "Subdomains of DNS domain to be resolved via /etc/resolv.conf for hostnet pods"
+  default     = 2
+}
+
 variable "use_legacy_naming_convention" {
   type        = bool
   description = "A boolean value that indicates whether to use legacy naming convention for the VM and cluster name. If your cluster was provisioned using version <= 3.x, set it to `true`"

@@ -67,6 +67,7 @@ The project provides several Terraform variables that allow you to customize the
 | <a name="input_location"></a> [location](#input\_location) | The city or region where the cluster is provisioned | `string` | `null` | no |
 | <a name="input_cluster_number"></a> [cluster\_number](#input\_cluster\_number) | The instance count for the k8s cluster, to differentiate it from other clusters. Example: `00`, `01` | `string` | `"01"` | no |
 | <a name="input_cluster_domain"></a> [cluster\_domain](#input\_cluster\_domain) | The cluster domain name | `string` | `"local"` | no |
+| <a name="input_ndots"></a> [ndots](#input\_ndots) | Subdomains of DNS domain to be resolved via /etc/resolv.conf for hostnet pods | `number` | `2` | no |
 | <a name="input_use_legacy_naming_convention"></a> [use\_legacy\_naming\_convention](#input\_use\_legacy\_naming\_convention) | A boolean value that indicates whether to use legacy naming convention for the VM and cluster name. If your cluster was provisioned using version <= 3.x, set it to `true` | `bool` | `false` | no |
 | <a name="input_pm_api_url"></a> [pm\_api\_url](#input\_pm\_api\_url) | The base URL for Proxmox VE API. See https://pve.proxmox.com/wiki/Proxmox_VE_API#API_URL | `string` | n/a | yes |
 | <a name="input_pm_api_token_id"></a> [pm\_api\_token\_id](#input\_pm\_api\_token\_id) | The token ID to access Proxmox VE API. | `string` | n/a | yes |
