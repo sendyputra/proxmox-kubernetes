@@ -76,17 +76,18 @@ module "kubespray_host" {
 resource "null_resource" "setup_kubespray" {
 
   count = var.create_kubespray_host ? 1 : 0
-  
+
   # Establishes connection to be used by all
   connection {
-    type         = "ssh"
-    user         = var.vm_user
-    private_key  = base64decode(var.ssh_private_key)
-    host         = module.kubespray_host.vm_list[0].ip0
-    port         = 22
-    bastion_host = var.bastion_ssh_ip
-    bastion_user = var.bastion_ssh_user
-    bastion_port = var.bastion_ssh_port
+    type                = "ssh"
+    user                = var.vm_user
+    private_key         = base64decode(var.ssh_private_key)
+    host                = module.kubespray_host.vm_list[0].ip0
+    port                = 22
+    bastion_host        = var.bastion_ssh_ip
+    bastion_user        = var.bastion_ssh_user
+    bastion_port        = var.bastion_ssh_port
+    bastion_private_key = base64decode(var.ssh_private_key)
   }
 
   provisioner "remote-exec" {
