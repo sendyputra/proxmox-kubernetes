@@ -88,6 +88,7 @@ resource "null_resource" "setup_kubespray" {
     bastion_user        = var.bastion_ssh_user
     bastion_port        = var.bastion_ssh_port
     bastion_private_key = base64decode(var.ssh_private_key)
+    bastion_host_key    =  base64decode(var.ssh_public_keys)
   }
 
   provisioner "remote-exec" {
