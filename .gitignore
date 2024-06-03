@@ -10,3 +10,4 @@ tmp
 Icon*
 .DS_Store
 .env*
+terraform-plugin-proxmox.log
