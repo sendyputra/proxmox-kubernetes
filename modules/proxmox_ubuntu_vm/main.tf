@@ -32,12 +32,21 @@ resource "proxmox_vm_qemu" "ubuntu_vm" {
   tags             = var.vm_tags
 
   disks {
-    virtio {
-      virtio0 {
+    scsi {
+      scsi0 {
         disk {
-          size     = "${var.vm_os_disk_size_gb}G"
-          storage  = var.vm_os_disk_storage
-          iothread = true
+          size        = "${var.vm_os_disk_size_gb}G"
+          storage     = var.vm_os_disk_storage
+          iothread    = true
+          emulatessd  = true
+        }
+      }
+    }
+
+    ide {
+      ide0 {
+        cloudinit {
+          storage = var.vm_os_disk_storage
         }
       }
     }
@@ -47,21 +56,24 @@ resource "proxmox_vm_qemu" "ubuntu_vm" {
     for_each = var.add_worker_node_data_disk ? [var.worker_node_data_disk_size] : []
 
     content {
-      virtio {
-        virtio0 {
+      scsi {
+        scsi0 {
           disk {
-            size     = "${var.vm_os_disk_size_gb}G"
-            storage  = var.vm_os_disk_storage
-            iothread = true
+            size        = "${var.vm_os_disk_size_gb}G"
+            storage     = var.vm_os_disk_storage
+            iothread    = true
+            emulatessd  = true
           }
         }
       }
-      # slot     = 1
-      # type     = "virtio"
-      # storage  = var.worker_node_data_disk_storage
-      # size     = "${var.worker_node_data_disk_size}G"
-      # iothread = 1
 
+      ide {
+        ide0 {
+          cloudinit {
+            storage = var.vm_os_disk_storage
+          }
+        }
+      }
     }
   }
 
