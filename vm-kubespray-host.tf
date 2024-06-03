@@ -70,6 +70,7 @@ module "kubespray_host" {
   vm_user                      = var.vm_user
   vm_tags                      = "${var.env_name};terraform;kubespray"
   ssh_public_keys              = var.ssh_public_keys
+  ssh_private_key              = var.ssh_private_key
   use_legacy_naming_convention = var.use_legacy_naming_convention
 }
 

@@ -29,6 +29,11 @@ variable "vm_net_subnet_cidr" {
   description = "Address prefix for the internal network"
 }
 
+variable "ssh_private_key" {
+  type        = string
+  description = "SSH private key in base64, will be used by Terraform client to connect to the VM after provisioning"
+}
+
 variable "ssh_public_keys" {
   type        = string
   description = "SSH public keys in base64."
