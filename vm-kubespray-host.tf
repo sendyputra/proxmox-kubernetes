@@ -69,7 +69,8 @@ module "kubespray_host" {
   vm_host_number               = 5
   vm_user                      = var.vm_user
   vm_tags                      = "${var.env_name};terraform;kubespray"
-  ssh_public_keys              = var.ssh_public_keys
+  ssh_public_keys              = base64decode(var.ssh_public_keys)
+  ssh_private_key              = base64decode(var.ssh_private_key)
   use_legacy_naming_convention = var.use_legacy_naming_convention
 }
 
@@ -79,16 +80,17 @@ resource "null_resource" "setup_kubespray" {
 
   # Establishes connection to be used by all
   connection {
-    type                = "ssh"
-    user                = var.vm_user
-    private_key         = base64decode(var.ssh_private_key)
-    host                = module.kubespray_host.vm_list[0].ip0
-    port                = 22
-    bastion_host        = var.bastion_ssh_ip
-    bastion_user        = var.bastion_ssh_user
-    bastion_port        = var.bastion_ssh_port
-    bastion_private_key = base64decode(var.ssh_private_key)
-    bastion_host_key    =  base64decode(var.ssh_public_keys)
+    type         = "ssh"
+    user         = var.vm_user
+    private_key  = base64decode(var.ssh_private_key)
+    host         = module.kubespray_host.vm_list[0].ip0
+    port         = 22
+    bastion_host = var.bastion_ssh_ip
+    bastion_user = var.bastion_ssh_user
+    bastion_port = var.bastion_ssh_port
+    # bastion_private_key = base64decode(var.ssh_private_key)
+    # bastion_host_key    = base64decode(var.ssh_public_keys)
+    timeout = "1m"
   }
 
   provisioner "remote-exec" {

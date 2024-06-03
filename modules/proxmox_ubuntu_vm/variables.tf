@@ -34,6 +34,11 @@ variable "ssh_public_keys" {
   description = "SSH public keys in base64."
 }
 
+variable "ssh_private_key" {
+  type        = string
+  description = "SSH private key in base64, will be used by Terraform client to connect to the VM after provisioning"
+}
+
 variable "vm_onboot" {
   type        = bool
   description = "Start the VM right after Proxmox host starts"

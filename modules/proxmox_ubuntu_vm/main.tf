@@ -35,7 +35,7 @@ resource "proxmox_vm_qemu" "ubuntu_vm" {
     virtio {
       virtio0 {
         disk {
-          size = "${var.vm_os_disk_size_gb}G"
+          size     = "${var.vm_os_disk_size_gb}G"
           storage  = var.vm_os_disk_storage
           iothread = true
         }
@@ -50,18 +50,12 @@ resource "proxmox_vm_qemu" "ubuntu_vm" {
       virtio {
         virtio0 {
           disk {
-            size = "${var.vm_os_disk_size_gb}G"
+            size     = "${var.vm_os_disk_size_gb}G"
             storage  = var.vm_os_disk_storage
             iothread = true
           }
         }
       }
-      # slot     = 1
-      # type     = "virtio"
-      # storage  = var.worker_node_data_disk_storage
-      # size     = "${var.worker_node_data_disk_size}G"
-      # iothread = 1
-      
     }
   }
 
@@ -72,8 +66,15 @@ resource "proxmox_vm_qemu" "ubuntu_vm" {
 
   ipconfig0 = "ip=${cidrhost(var.vm_net_subnet_cidr, var.vm_host_number + count.index)}${local.vm_net_subnet_mask},gw=${local.vm_net_default_gw}"
 
-  ciuser  = var.vm_user
-  sshkeys = base64decode(var.ssh_public_keys)
+  ciuser          = var.vm_user
+  sshkeys         = base64decode(var.ssh_public_keys)
+  ssh_private_key = base64decode(var.ssh_private_key)
+
+  provisioner "remote-exec" {
+    inline = [
+      "ip a"
+    ]
+  }
 
   lifecycle {
     ignore_changes = [
